@@ -23,6 +23,10 @@ class FiltersViewController: UIViewController {
     fileprivate var categories: [[String: String]]!
     fileprivate var categorySwitchStates = [Int: Bool]()
 
+    fileprivate var offeringDealState: Bool = false
+    fileprivate var distanceState: String = ""
+    fileprivate var sortByState: String = ""
+
     fileprivate var filterTableData: [[[String: String]]] = []
 
     override func viewDidLoad() {
@@ -39,6 +43,9 @@ class FiltersViewController: UIViewController {
     func initialize() {
         self.yelpFilters = self.yelpFilters ?? YelpFilters()
 
+        // ingest incoming filters to set up initial state
+
+        // populate filter data
         filterTableData.append(YelpFilterData.offeringDeal)
         filterTableData.append(YelpFilterData.distance)
         filterTableData.append(YelpFilterData.sort)
@@ -144,7 +151,7 @@ extension FiltersViewController: FilterCellDelegate {
         // code for toggling
 
         // once in here, for distance and sort by, set the distanceCheckedValue and SortCheckedValue.
-        // remember to uncheck all values in the group that arent equal to distanceCheckedValue and SortCheckedValue in tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell 
+        // remember to uncheck all values in the group that arent equal to distanceCheckedValue and SortCheckedValue in tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
 
         categorySwitchStates[indexPath.row] = value
     }

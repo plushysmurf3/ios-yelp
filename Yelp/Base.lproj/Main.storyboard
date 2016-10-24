@@ -206,7 +206,7 @@
             <objects>
                 <navigationController storyboardIdentifier="initial" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="u9E-Te-nuP" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yC7-mv-nvi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yC7-mv-nvi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -224,7 +224,7 @@
             <objects>
                 <navigationController storyboardIdentifier="filters" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aKV-iQ-df2" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yxc-L7-edK">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yxc-L7-edK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

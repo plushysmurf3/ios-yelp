@@ -30,6 +30,8 @@ class FiltersViewController: UIViewController {
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.estimatedRowHeight = 120
+        self.tableView.rowHeight = UITableViewAutomaticDimension
 
         initialize()
     }
@@ -76,18 +78,59 @@ class FiltersViewController: UIViewController {
 
 extension FiltersViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.filterTableData[self.CATEGORY].count
+        return self.filterTableData[section].count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "com.yelp.filtercell", for: indexPath) as! FilterCell
 
-        var category = filterTableData[self.CATEGORY][indexPath.row]
-        cell.filterLabel.text = category["name"]
-        cell.filterSwitch.isOn = categorySwitchStates[indexPath.row] ?? false
-        cell.delegate = self
+        let data = self.filterTableData[indexPath.section][indexPath.row]
+
+        switch (indexPath.section)
+        {
+        case self.DISTANCE:
+            cell.filterLabel.text = data["distance"]
+            cell.filterSwitch.isHidden = true
+            cell.accessoryType = .checkmark
+            break
+        case self.SORT_BY:
+            cell.filterLabel.text = data["type"]
+            cell.filterSwitch.isHidden = true
+            cell.accessoryType = .checkmark
+            break
+        case self.CATEGORY:
+            cell.filterLabel.text = data["name"]
+            cell.filterSwitch.isHidden = false
+            cell.filterSwitch.isOn = categorySwitchStates[indexPath.row] ?? false
+            cell.accessoryType = .none
+            cell.delegate = self
+            break
+        default:
+            cell.filterLabel.text = data["name"]
+            cell.filterSwitch.isHidden = false
+            cell.filterSwitch.isOn = (self.yelpFilters?.deals) ?? false
+            cell.accessoryType = .none
+            break
+        }
 
         return cell
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.filterTableData.count
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+            case self.DISTANCE:
+                return "Distance"
+            case self.SORT_BY:
+                return "Sort By"
+            case self.CATEGORY:
+                return "Category"
+            default:
+                return ""
+        }
     }
 }
 
@@ -97,6 +140,11 @@ extension FiltersViewController: UITableViewDelegate {
 extension FiltersViewController: FilterCellDelegate {
     func filterCell(filterCell: FilterCell, didChangeValue value: Bool) {
         let indexPath = tableView.indexPath(for: filterCell)!
+
+        // code for toggling
+
+        // once in here, for distance and sort by, set the distanceCheckedValue and SortCheckedValue.
+        // remember to uncheck all values in the group that arent equal to distanceCheckedValue and SortCheckedValue in tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell 
 
         categorySwitchStates[indexPath.row] = value
     }

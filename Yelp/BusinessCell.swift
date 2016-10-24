@@ -21,13 +21,20 @@ class BusinessCell: UITableViewCell {
 
     var business: Business! {
         didSet {
-            thumbImageView.setImageWith(business.imageURL!)
-            nameLabel.text = business.name
-            distanceLabel.text = business.distance
-            ratingImageView.setImageWith(business.ratingImageURL!)
+            thumbImageView.image = nil
+            if (business.imageURL != nil) {
+                thumbImageView.setImageWith(business.imageURL!)
+            }
+            nameLabel.text = business.name!
+            distanceLabel.text = business.distance!
+
+            ratingImageView.image = nil
+            if (business.ratingImageURL != nil) {
+                ratingImageView.setImageWith(business.ratingImageURL!)
+            }
             reviewsCount.text = String(describing: business.reviewCount!) + " Reviews"
-            addressLabel.text = business.address
-            categoriesLabel.text = business.categories
+            addressLabel.text = business.address!
+            categoriesLabel.text = business.categories!
         }
     }
 

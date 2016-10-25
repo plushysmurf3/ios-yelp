@@ -17,7 +17,7 @@ class FiltersViewController: UIViewController {
 
     fileprivate var categories: [String] = []
     fileprivate var categorySwitchStates = [Int: Bool]()
-    fileprivate var categoriesCollapsed: Bool = false
+    fileprivate var categoriesCollapsed: Bool = true
 
     fileprivate var offeringDealState: Bool = false
 
@@ -118,6 +118,28 @@ extension FiltersViewController: UITableViewDataSource {
             }
             break
         case YelpFilterTypes.CATEGORY:
+            if (self.categoriesCollapsed) {
+                if (categories.count > 0) {
+                    self.filterTableData[section] = YelpFilterData.categories.filter({categories.contains($0["code"]!)})
+                    self.filterTableData[section].append(["name" : "Show All", "code": ""])
+                }
+                else {
+                    if (YelpFilterData.categories.count >= 5) {
+                        self.filterTableData[section].removeAll()
+                        for i in (0..<5) {
+                            self.filterTableData[section].append(YelpFilterData.categories[i])
+                        }
+
+                        self.filterTableData[section].append(["name" : "Show All", "code": ""])
+                    }
+                    else {
+                        self.filterTableData[section] = YelpFilterData.categories
+                    }
+                }
+            }
+            else {
+                self.filterTableData[section] = YelpFilterData.categories
+            }
             break
         default:
             break
@@ -131,6 +153,8 @@ extension FiltersViewController: UITableViewDataSource {
 
         let data = self.filterTableData[indexPath.section][indexPath.row]
 
+        cell.showAll.isHidden = true
+        cell.filterLabel.isHidden = false
         switch (indexPath.section)
         {
         case YelpFilterTypes.DISTANCE:
@@ -146,6 +170,7 @@ extension FiltersViewController: UITableViewDataSource {
                     cell.accessoryType = .checkmark
                 }
             }
+            cell.selectionStyle = UITableViewCellSelectionStyle.default;
             break
         case YelpFilterTypes.SORT_BY:
             cell.filterLabel.text = data["type"]
@@ -160,13 +185,24 @@ extension FiltersViewController: UITableViewDataSource {
                     cell.accessoryType = .checkmark
                 }
             }
+            cell.selectionStyle = UITableViewCellSelectionStyle.default;
             break
         case YelpFilterTypes.CATEGORY:
+            if (data["code"] == "") {
+                cell.filterLabel.isHidden = true
+                cell.filterSwitch.isHidden = true
+                cell.showAll.isHidden = false
+                cell.filterValue = data["code"] as AnyObject!
+                break;
+            }
+
             cell.filterLabel.text = data["name"]
             cell.filterSwitch.isHidden = false
             cell.filterSwitch.isOn = self.categories.contains(data["code"]!)
             categorySwitchStates[indexPath.row] = cell.filterSwitch.isOn
+            cell.filterValue = data["code"] as AnyObject!
             cell.accessoryType = .none
+            cell.selectionStyle = UITableViewCellSelectionStyle.none;
             cell.delegate = self
             break
         default:
@@ -174,11 +210,10 @@ extension FiltersViewController: UITableViewDataSource {
             cell.filterSwitch.isHidden = false
             cell.filterSwitch.isOn = self.offeringDealState
             cell.accessoryType = .none
+            cell.selectionStyle = UITableViewCellSelectionStyle.none;
             cell.delegate = self
             break
         }
-
-        cell.filterType = indexPath.section
 
         return cell
     }
@@ -214,6 +249,12 @@ extension FiltersViewController: UITableViewDelegate {
             self.sortByState = filterCell.filterValue as! String
             self.sortByCollapsed = !self.sortByCollapsed
             break
+        case YelpFilterTypes.CATEGORY:
+            if (filterCell.filterValue as! String == "") {
+                self.categoriesCollapsed = !self.categoriesCollapsed
+                break
+            }
+            return
         default:
             return
         }

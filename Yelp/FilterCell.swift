@@ -10,10 +10,10 @@ import UIKit
 
 class FilterCell: UITableViewCell {
     
+    @IBOutlet weak var showAll: UILabel!
     @IBOutlet weak var filterLabel: UILabel!
     @IBOutlet weak var filterSwitch: UISwitch!
     var filterValue: AnyObject!
-    var filterType: Int!
 
     weak var delegate: FilterCellDelegate?
 

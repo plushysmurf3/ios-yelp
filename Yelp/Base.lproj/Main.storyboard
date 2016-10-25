@@ -112,7 +112,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="1dD-ED-KGm">
                         <barButtonItem key="leftBarButtonItem" id="qwH-Qd-PnG">
-                            <color key="tintColor" red="1" green="0.12292773161333859" blue="0.063745403104431553" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="aKV-iQ-df2" kind="presentation" id="NfQ-au-nAh"/>
                             </connections>
@@ -148,12 +148,19 @@
                                             <frame key="frameInset" width="375" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVd-s5-ywN">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVd-s5-ywN">
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ROD-Id-YwU"/>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Show All" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKe-DW-Y5N">
+                                                    <frame key="frameInset" minX="154" minY="17" width="66" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="xVd-s5-ywN" firstAttribute="leading" secondItem="T8r-wY-6hF" secondAttribute="leading" constant="8" id="3gf-Z2-Y1r"/>
@@ -168,6 +175,7 @@
                                         <connections>
                                             <outlet property="filterLabel" destination="xVd-s5-ywN" id="cJj-P5-J94"/>
                                             <outlet property="filterSwitch" destination="ROD-Id-YwU" id="v2L-4Q-xS1"/>
+                                            <outlet property="showAll" destination="YKe-DW-Y5N" id="l40-L5-s5V"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -183,11 +191,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Filters" id="3sD-xj-UTV">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="csb-RO-wrk">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="onCancel:" destination="WkC-qj-vqQ" id="Uef-s2-bDo"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Search" id="UMO-pN-Ccm">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onSearch:" destination="WkC-qj-vqQ" id="d3p-3d-4bQ"/>
                             </connections>
@@ -209,6 +219,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yC7-mv-nvi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="1" green="0.14901960780000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -227,6 +241,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yxc-L7-edK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="1" green="0.14901960780000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

@@ -10,14 +10,16 @@ import Foundation
 
 struct YelpFilterData {
     static let offeringDeal: [[String:String]] = [["name": "Offering a Deal"]]
-    static let distance: [[String:String]] = [["distance": "Auto", "value": "0" ],
+    static let distance: [[String:String]] = [["distance": "Auto", "value": "" ],
                                               ["distance": "0.5 km", "value": "500"],
                                               ["distance": "2 km", "value": "2000"],
                                               ["distance": "5 km", "value": "5000"],
                                               ["distance": "20 km", "value": "20000"]]
+    
     static let sort: [[String:String]] = [["type": "Best matched", "value": "0"],
                                           ["type": "Distance", "value":"1"],
                                           ["type": "Highest Rated", "value": "2"]]
+
     static let categories: [[String:String]] = [["name" : "Afghan", "code": "afghani"],
                                                 ["name" : "African", "code": "african"],
                                                 ["name" : "American, New", "code": "newamerican"],

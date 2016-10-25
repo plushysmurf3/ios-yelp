@@ -40,10 +40,10 @@ class BusinessesViewController: UIViewController {
         self.tableView.estimatedRowHeight = 120
         self.tableView.rowHeight = UITableViewAutomaticDimension
 
-        yelpFilters.searchString = "Thai"
-        self.searchBar.text = yelpFilters.searchString
+        self.yelpFilters.searchString = "Thai"
+        self.searchBar.text = self.yelpFilters.searchString
 
-        doSearch(filters: yelpFilters)
+        doSearch(filters: self.yelpFilters)
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,7 +56,7 @@ class BusinessesViewController: UIViewController {
         let filtersViewController = navigationController.topViewController as! FiltersViewController
 
         self.delegate = filtersViewController
-        self.delegate?.businessesViewController(businessesViewController: self, onNavigateAway: yelpFilters)
+        self.delegate?.businessesViewController(businessesViewController: self, onNavigateAway: self.yelpFilters)
 
         filtersViewController.delegate = self
     }
@@ -66,18 +66,35 @@ class BusinessesViewController: UIViewController {
 
         MBProgressHUD.showAdded(to: self.view, animated: true)
 
-        let searchString = filters.searchString
-        let sort: YelpSortMode? = filters.sort
+        let searchString: String = filters.searchString!
+        let sort: YelpSortMode = toYelpSortMode(sort: filters.sort)
         let categories = filters.categories
-        let deals: Bool? = filters.deals
+        let deals = filters.deals
+        let distance = filters.distance
 
-        Business.searchWithTerm(term: searchString!, sort: sort, categories: categories, deals: deals, completion: {
+        Business.searchWithTerm(term: searchString, sort: sort, categories: categories, deals: deals, distance: distance, completion: {
             (businesses: [Business]?, error: Error?) -> Void in
             self.businesses = businesses
             self.tableView.reloadData()
             self.printBusinesses(businesses: businesses)
             MBProgressHUD.hide(for: self.view, animated: true)
         })
+    }
+
+    fileprivate func toYelpSortMode(sort: String?) -> YelpSortMode {
+
+        if (sort == nil) {
+            return YelpSortMode.bestMatched
+        }
+
+        switch sort! {
+            case "1":
+                return YelpSortMode.distance
+            case "2":
+                return YelpSortMode.highestRated
+            default:
+                return YelpSortMode.bestMatched
+        }
     }
 
     fileprivate func printBusinesses(businesses: [Business]?) {
@@ -123,20 +140,21 @@ extension BusinessesViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
-        yelpFilters.searchString = ""
-        doSearch(filters: yelpFilters)
+        self.yelpFilters.searchString = ""
+        doSearch(filters: self.yelpFilters)
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        yelpFilters.searchString = searchBar.text
+        self.yelpFilters.searchString = searchBar.text
         searchBar.resignFirstResponder()
-        doSearch(filters: yelpFilters)
+        doSearch(filters: self.yelpFilters)
     }
 }
 
+// FiltersViewControllerDelegate
 extension BusinessesViewController: FiltersViewControllerDelegate {
-    func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String:AnyObject]) {
-        yelpFilters.categories = filters["categories"] as? [String]
-        doSearch(filters: yelpFilters)
+    func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: YelpFilters) {
+        self.yelpFilters = filters
+        doSearch(filters: self.yelpFilters)
     }
 }

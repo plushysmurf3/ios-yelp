@@ -8,6 +8,6 @@
 
 import Foundation
 
-@objc protocol FiltersViewControllerDelegate: class {
-    @objc optional func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String:AnyObject])
+protocol FiltersViewControllerDelegate: class {
+    func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: YelpFilters)
 }

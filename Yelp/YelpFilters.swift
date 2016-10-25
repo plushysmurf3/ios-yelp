@@ -11,7 +11,8 @@ import Foundation
 // Model class that represents the user's search settings
 struct YelpFilters {
     var searchString: String? = ""
-    var categories: [String]? = nil
-    var sort: YelpSortMode? = nil
+    var categories: [String]? = []
+    var sort: String? = nil
     var deals: Bool? = nil
+    var distance: String? = nil
 }

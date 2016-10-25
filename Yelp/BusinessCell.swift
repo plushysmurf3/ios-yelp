@@ -41,7 +41,7 @@ class BusinessCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        thumbImageView.layer.cornerRadius = 3
+        thumbImageView.layer.cornerRadius = 4
         thumbImageView.clipsToBounds = true
     }
 
